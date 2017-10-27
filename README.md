@@ -1,4 +1,4 @@
-# Web Application
+# Guessing Game Web Application
 
 ## HTTP header inspection using cURL 
 
@@ -50,7 +50,7 @@ The first output are some transaction's statistics about request time:
   ``` 
 
 
-The first header section is the request's HTTP header: 
+The first header section are the request's HTTP headers: 
 ```
 > GET / HTTP/1.1
 > Host: localhost:8080
@@ -58,7 +58,7 @@ The first header section is the request's HTTP header:
 > Accept: */*
 ```
 
-The next header section is the response's HTTP header coming from the server:
+The next header section are the response's HTTP headers coming from the server:
 ```
 < HTTP/1.1 200 OK
 < Date: Fri, 27 Oct 2017 13:01:04 GMT
