@@ -13,6 +13,7 @@ type goPlaceholders struct {
 	Message string
 	// As seen in https://stackoverflow.com/questions/18175630/go-template-executetemplate-include-html
 	UserGuess template.HTML
+	ShowForm  bool
 }
 
 func handlerFunc(w http.ResponseWriter, r *http.Request) {
@@ -23,7 +24,7 @@ func handlerGame(w http.ResponseWriter, r *http.Request) {
 	// Initializing local variables
 	targetCookie, _ := r.Cookie("target")
 	guess := r.FormValue("guess")
-	placeholders := &goPlaceholders{Message: "Guess a number between 1 and 20"}
+	placeholders := &goPlaceholders{Message: "Guess a number between 1 and 20", ShowForm: true}
 	rand.Seed(time.Now().UnixNano())
 	outputHTML := ""
 
@@ -31,6 +32,7 @@ func handlerGame(w http.ResponseWriter, r *http.Request) {
 	if len(guess) > 0 && len(targetCookie.Value) > 0 {
 		// User wins
 		if strings.Compare(targetCookie.Value, guess) == 0 {
+			placeholders.ShowForm = false
 
 			outputHTML += "<h3>Congratulations!! You've guessed the number!!</h3>\n"
 			outputHTML += "<h3>The number was " + guess + "</h3>\n"
