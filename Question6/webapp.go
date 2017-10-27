@@ -29,6 +29,7 @@ func handlerGame(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, &http.Cookie{Name: "target", Value: randomNumber})
 	}
 
+	// If 'guess' variable has something, display its value
 	if len(guess) > 0 {
 		placeholders.UserGuess = "You guessed " + guess
 	}
