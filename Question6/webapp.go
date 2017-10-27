@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-type messageT struct {
-	Message string
-	Guess   string
+type goPlaceholders struct {
+	Message   string
+	UserGuess string
 }
 
 func handlerFunc(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +20,7 @@ func handlerFunc(w http.ResponseWriter, r *http.Request) {
 func handlerGame(w http.ResponseWriter, r *http.Request) {
 	// Initializing local variables
 	guess := r.FormValue("guess")
-	message := &messageT{Message: "Guess a number between 1 and 20", Guess: guess}
+	placeholders := &goPlaceholders{Message: "Guess a number between 1 and 20"}
 	rand.Seed(time.Now().UnixNano())
 	randomNumber := strconv.Itoa(rand.Intn(20-1) + 1)
 
@@ -29,12 +29,13 @@ func handlerGame(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, &http.Cookie{Name: "target", Value: randomNumber})
 	}
 
-	// if strings.Compare(guess, randomNumber) == 0 {
-
-	// }
+	if len(guess) > 0 {
+		placeholders.UserGuess = "You guessed " + guess
+	}
 
 	templ, _ := template.ParseFiles("guess.tmpl")
-	templ.Execute(w, message)
+	templ.Execute(w, placeholders)
+
 }
 
 func main() {
