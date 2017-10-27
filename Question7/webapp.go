@@ -13,9 +13,6 @@ type goPlaceholders struct {
 	Message string
 	// As seen in https://stackoverflow.com/questions/18175630/go-template-executetemplate-include-html
 	UserGuess template.HTML
-	// Congratulations string
-	// NewGame template.HTML
-	// NewGameLink     string
 }
 
 func handlerFunc(w http.ResponseWriter, r *http.Request) {
@@ -34,14 +31,9 @@ func handlerGame(w http.ResponseWriter, r *http.Request) {
 	if len(guess) > 0 && len(targetCookie.Value) > 0 {
 		// User wins
 		if strings.Compare(targetCookie.Value, guess) == 0 {
-			// placeholders.Congratulations = "Congratulations!! You've guessed the number!!" + guess
-			// placeholders.NewGame = "Want to try again? <a href=\"/guess\">New Game</a>"
-			// placeholders.NewGame = "Want to try again? <a href=\"/guess\">New Game</a>"
 			outputHTML += "<h3>Congratulations!! You've guessed the number!!</h3>\n"
 			outputHTML += "<h3>The number was " + guess + "</h3>\n"
 			outputHTML += "<h3>Want to try again? <a href=\"/guess\">New Game</a></3>\n"
-
-			// placeholders.UserGuess = template.HTML(outputHTML)
 
 			// Set new cookie for the next game
 			http.SetCookie(w, &http.Cookie{Name: "target", Value: strconv.Itoa(rand.Intn(20-1) + 1)})
